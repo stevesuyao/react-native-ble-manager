@@ -163,7 +163,9 @@ public class Peripheral extends BluetoothGattCallback {
 				advertising.putString("localName", name);
 
 			advertising.putMap("manufacturerData", byteArrayToWritableMap(advertisingDataBytes));
-			advertising.putBoolean("isConnectable", true);
+			// NOTE: If an advertisment is connectable, it contains flags, otherwise there is no flags.
+			int connectableFlags = advertisingData.getAdvertiseFlags();
+			advertising.putBoolean("isConnectable", connectableFlags != -1);
 
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && advertisingData != null) {
 				String deviceName = advertisingData.getDeviceName();
