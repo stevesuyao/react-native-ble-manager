@@ -1,20 +1,29 @@
 buildscript {
-	repositories {
-		jcenter()
-	}
+    // The Android Gradle plugin is only required when opening the android folder stand-alone.
+    // This avoids unnecessary downloads and potential conflicts when the library is included as a
+    // module dependency in an application project.
+    if (project == rootProject) {
+        repositories {
+            google()
+            jcenter()
+        }
 
-	dependencies {
-		classpath 'com.android.tools.build:gradle:1.5.0'
-	}
+        dependencies {
+            classpath("com.android.tools.build:gradle:3.6.1")
+        }
+    }
 }
 apply plugin: 'com.android.library'
 
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
 android {
-	compileSdkVersion 26
-	buildToolsVersion "26.0.1"
+	compileSdkVersion safeExtGet("compileSdkVersion", 29)
 
 	defaultConfig {
-		minSdkVersion 19
+		minSdkVersion safeExtGet("minSdkVersion", 19)
 	}
 	lintOptions {
 		abortOnError false
@@ -23,6 +32,8 @@ android {
 
 repositories {
 	mavenCentral()
+	google()
+	jcenter()
 	maven {
 		// All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
 		url "$rootDir/../node_modules/react-native/android"
@@ -32,5 +43,6 @@ repositories {
 
 
 dependencies {
-	compile 'com.facebook.react:react-native:[0.30.0,)'
+	implementation "com.facebook.react:react-native:+"
+//	implementation "org.jetbrains.trove4j: trove4j: 20160824"
 }

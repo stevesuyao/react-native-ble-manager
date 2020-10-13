@@ -1,8 +1,9 @@
 {
   "name": "react-native-ble-manager",
-  "version": "6.5.5",
+  "version": "7.4.1",
   "description": "A BLE module for react native.",
   "main": "BleManager",
+  "types": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/innoveit/react-native-ble-manager.git"
